@@ -4,7 +4,7 @@
 #include<asm/io.h>
 
 
-const MIN_PID = 650;
+const int MIN_PID = 650;
 
 proc_count(void);
 
@@ -25,7 +25,7 @@ int proc_count(void) {
     int i = 0;
     struct task_struct *thechild;
     for_each_process(thechild) { 
-        if (thechild->pid > MID_PID && thechild->state == TASK_RUNNING) {
+        if (thechild->pid > MID_PID) {
             printk(KERN_INFO "%d, %s\n", thechild->pid, thechild->state);
             i++;
         }
