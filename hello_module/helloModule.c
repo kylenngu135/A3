@@ -1,4 +1,5 @@
 #include<linux/module.h>
+#include<linux/sched/signal.h>
 #include<linux/pid_namespace.h>
 #include<asm/io.h>
 
@@ -24,8 +25,8 @@ int proc_count(void) {
     int i = 0;
     struct task_struct *thechild;
     for_each_process(thechild) { 
-        if (thechild->pid > MID_PID) {
-            printk(KERN_INFO "%d\n", thechild->pid);
+        if (thechild->pid > MID_PID && thechild->state == TASK_RUNNING) {
+            printk(KERN_INFO "%d, %s\n", thechild->pid, thechild->state);
             i++;
         }
     }
