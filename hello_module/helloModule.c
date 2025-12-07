@@ -24,6 +24,7 @@ void proc_cleanup(void) {
 int proc_count(void) {
     int i = 0;
     struct task_struct *thechild;
+    struct vma_area_struct *vma;
     unsigned long physical_page_addr;
     for_each_process(thechild) { 
         if (thechild->pid > MIN_PID) {
@@ -75,7 +76,7 @@ unsigned long virt2phys(struct mm_struct *mm, unsigned long vpage) {
     pmd = pmd_offset(pud, vpage);
     if (pmd_none(*pmd) || pmd_bad(*pmd))
     if (!(pte = pte_offset_map(pmd, vpage)))
-        return 0;
+        return 0
     if (!(page = pte_page(*pte)))
         return 0;
     physical_page_addr = page_to_phys(page);
