@@ -5,7 +5,9 @@
 
 const int MIN_PID = 650;
 
-proc_count(void);
+int proc_count(void);
+
+unsigned long virt2phys(struct mm_struct mm, unsigned long vpage);
 
 int proc_init (void) {
   printk(KERN_INFO "helloModule: kernel module initialized\n");
