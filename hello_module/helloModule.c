@@ -11,8 +11,9 @@ int proc_count(void);
 unsigned long virt2phys(struct mm_struct *mm, unsigned long vpage);
 
 int proc_init (void) {
-  printk(KERN_INFO "helloModule: kernel module initialized\n");
-  printk(KERN_INFO "There are %d running processes.\n", proc_count());
+  printk(KERN_INFO "PROCESS REPORT:\n");
+  printk(KERN_INFO "proc_id,proc_name,total_pages\n");
+  proc_count();
 
   return 0;
 }
