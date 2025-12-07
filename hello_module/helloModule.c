@@ -24,6 +24,7 @@ int proc_count(void) {
     struct task_struct *thechild;
     struct vm_area_struct *vma;
     unsigned long vpage, physical_page_addr, total_pages, prev_page, contig, noncontig;
+    unsigned long total_pages_all = 0, total_contig = 0, total_noncontig = 0;
 
     for_each_process(thechild) { 
         if (thechild->pid > MIN_PID) {
@@ -44,8 +45,15 @@ int proc_count(void) {
                     }
                 }
             }
+
+            total_pages_all += total_pages;
+            total_contig += contig;
+            total_noncontig += noncontig; 
+
             printk(KERN_INFO "%d,%s,%lu,%lu,%lu\n", thechild->pid, thechild->comm, contig, noncontig, total_pages);
         }
+
+        printk(KERN_INFO "TOTALS,,%lu,%lu,%lu\n", total_pages_all, total_contig, total_noncontig);
     }
 
     return 0;
