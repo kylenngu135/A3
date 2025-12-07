@@ -52,9 +52,8 @@ int proc_count(void) {
 
             printk(KERN_INFO "%d,%s,%lu,%lu,%lu\n", thechild->pid, thechild->comm, contig, noncontig, total_pages);
         }
-
-        printk(KERN_INFO "TOTALS,,%lu,%lu,%lu\n", total_pages_all, total_contig, total_noncontig);
     }
+    printk(KERN_INFO "TOTALS,,%lu,%lu,%lu\n", total_contig, total_noncontig, total_pages_all);
 
     return 0;
 }
