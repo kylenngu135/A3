@@ -31,7 +31,7 @@ int proc_count(void) {
         if (thechild->pid > MIN_PID) {
             total_pages = 0;
             if (thechild->mm && thechild->mm->mmap) {
-                for (vma = thechild->mm->mmap; vma; vma->vm_next) {
+                for (vma = thechild->mm->mmap; vma; vma = vma->vm_next) {
                     for (vpage = vma->vm_start; vpage < vma->vm_end; vpage += PAGE_SIZE) {
                         // physical_page_addr = virt2phys(thechild->mm, vpage);
                         physical_page_addr = virt_to_phys((void *) vpage);
