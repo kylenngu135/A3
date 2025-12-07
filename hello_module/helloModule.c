@@ -12,6 +12,8 @@ int proc_count(void);
 
 int proc_init (void) {
   printk(KERN_INFO "helloModule: kernel module initialized\n");
+  printk(KERN_INFO "There are %d running processes.\n", proc_count());
+
   return 0;
 }
 
@@ -23,9 +25,14 @@ int proc_count(void) {
     int i = 0;
     struct task_struct *thechild;
     for_each_process(thechild) { 
+        i++;
         if (thechild->pid > MIN_PID) {
             printk(KERN_INFO "%d, %s\n", thechild->pid, thechild->comm);
             i++;
+        }
+    }
+
+    return i;
             /*
             struct vm_area_struct *vma = 0;
             unsigned long vpage;
@@ -37,9 +44,6 @@ int proc_count(void) {
                 }
             }
             */
-        }
-    }
-    return i;
 }
 
 /*
