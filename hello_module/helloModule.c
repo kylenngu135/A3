@@ -2,13 +2,13 @@
 #include<linux/sched/signal.h>
 #include<linux/pid_namespace.h>
 #include<asm/io.h>
+#include <linux/pgtable.h>
 
 const int MIN_PID = 650;
 
 int proc_count(void);
 
-
-// unsigned long virt2phys(struct mm_struct *mm, unsigned long vpage);
+unsigned long virt2phys(struct mm_struct *mm, unsigned long vpage);
 
 int proc_init (void) {
   printk(KERN_INFO "helloModule: kernel module initialized\n");
@@ -24,13 +24,22 @@ void proc_cleanup(void) {
 int proc_count(void) {
     int i = 0;
     struct task_struct *thechild;
+    unsigned long physical_page_addr;
     for_each_process(thechild) { 
-        i++;
         if (thechild->pid > MIN_PID) {
-            printk(KERN_INFO "%d, %s\n", thechild->pid, thechild->comm);
-            i++;
+            if (thechild->mm && thechild->mm->mmap) {
+                for (vma = vma->mm->mmap; vma; vma->vm_next) {
+                    for (vpage = vma->vm_start; vpage < vma->vm_end; vpage += PAGE_SIZE) {
+                        physical_page_addr = virt2phys(thechild->mm, vpage);
+                    }
+                }
+            }
         }
     }
+
+
+    printk(KERN_INFO "%d, %s\n", thechild->pid, thechild->comm);
+    i++;
 
     return i;
             /*
@@ -46,15 +55,14 @@ int proc_count(void) {
             */
 }
 
-/*
 unsigned long virt2phys(struct mm_struct *mm, unsigned long vpage) {
-    /*
     pgd_t *pgd;
     p4d_t *p4d;
     pud_t *pud;
     pmd_t *pmd;
     pte_t *pte;
     struct page *page;
+    unsigned long physical_page_arr;
     pgd = pgd_offset(mm, vpage);
     if (pgd_none(*pgd) || pgd_bad(*pgd))
         return 0;
@@ -70,14 +78,13 @@ unsigned long virt2phys(struct mm_struct *mm, unsigned long vpage) {
         return 0;
     if (!(page = pte_page(*pte)))
         return 0;
-    unsigned long physical_page_addr = page_to_phys(page);
+    physical_page_addr = page_to_phys(page);
     pte_unmap(pte);
     // handle unmapped page
     if (physical_page_addr == 70368644173568)
         return 0;
     return physical_page_addr;
 }
-*/
 
 MODULE_LICENSE("GPL");
 module_init(proc_init);
