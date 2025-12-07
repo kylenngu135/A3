@@ -27,10 +27,10 @@ int proc_count(void) {
             i++;
             struct vm_area_struct *vma = 0;
             unsigned long vpage;
-            if (task->mm && task->mm->mmap) {
+            if (thechild->mm && thechild->mm->mmap) {
                 for (vma = vma->mm->mmap; vma; vma->vm_next) {
                     for (vpage = vma->vm_start; vpage < vma->vm_end; vpage += PAGE_SIZE) {
-                        unsigned long physical_page_addr = virt2phys(task->mm, vpage);
+                        unsigned long physical_page_addr = virt2phys(thechild->mm, vpage);
                     }
                 }
             }
