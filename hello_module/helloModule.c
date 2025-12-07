@@ -26,7 +26,7 @@ int proc_count(void) {
     struct task_struct *thechild;
     struct vm_area_struct *vma;
     unsigned long vpage, physical_page_addr;
-    unsigned long total_ages = 0;
+    unsigned long total_pages = 0;
     for_each_process(thechild) { 
         if (thechild->pid > MIN_PID) {
             total_pages = 0;
