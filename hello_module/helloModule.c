@@ -41,8 +41,8 @@ int proc_count(void) {
                     }
                 }
             }
+            printk(KERN_INFO "%d,%s,%lu\n", thechild->pid, thechild->comm, total_pages);
         }
-        printk(KERN_INFO "%d,%s,%lu\n", thechild->pid, thechild->comm, total_pages);
     }
 
     return 0;
