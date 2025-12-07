@@ -7,7 +7,8 @@ const int MIN_PID = 650;
 
 int proc_count(void);
 
-unsigned long virt2phys(struct mm_struct *mm, unsigned long vpage);
+
+// unsigned long virt2phys(struct mm_struct *mm, unsigned long vpage);
 
 int proc_init (void) {
   printk(KERN_INFO "helloModule: kernel module initialized\n");
@@ -41,6 +42,7 @@ int proc_count(void) {
     return i;
 }
 
+/*
 unsigned long virt2phys(struct mm_struct *mm, unsigned long vpage) {
     /*
     pgd_t *pgd;
@@ -70,8 +72,8 @@ unsigned long virt2phys(struct mm_struct *mm, unsigned long vpage) {
     if (physical_page_addr == 70368644173568)
         return 0;
     return physical_page_addr;
-    */
 }
+*/
 
 MODULE_LICENSE("GPL");
 module_init(proc_init);
