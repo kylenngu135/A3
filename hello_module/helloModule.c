@@ -48,7 +48,7 @@ unsigned long virt2phys(struct mm_struct *mm, unsigned long vpage) {
     pmd_t *pmd;
     pte_t *pte;
     struct page *page;
-    unsigned long physical_page_arr;
+    unsigned long physical_page_addr;
     pgd = pgd_offset(mm, vpage);
     if (pgd_none(*pgd) || pgd_bad(*pgd))
         return 0;
@@ -61,7 +61,7 @@ unsigned long virt2phys(struct mm_struct *mm, unsigned long vpage) {
     pmd = pmd_offset(pud, vpage);
     if (pmd_none(*pmd) || pmd_bad(*pmd))
     if (!(pte = pte_offset_map(pmd, vpage)))
-        return 0
+        return 0;
     if (!(page = pte_page(*pte)))
         return 0;
     physical_page_addr = page_to_phys(page);
@@ -69,6 +69,7 @@ unsigned long virt2phys(struct mm_struct *mm, unsigned long vpage) {
     // handle unmapped page
     if (physical_page_addr == 70368644173568)
         return 0;
+
     return physical_page_addr;
 }
 
