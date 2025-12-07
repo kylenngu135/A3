@@ -28,7 +28,7 @@ int proc_count(void) {
     for_each_process(thechild) { 
         if (thechild->pid > MIN_PID) {
             if (thechild->mm && thechild->mm->mmap) {
-                for (vma = vma->mm->mmap; vma; vma->vm_next) {
+                for (vma = thechild->mm->mmap; vma; vma->vm_next) {
                     for (vpage = vma->vm_start; vpage < vma->vm_end; vpage += PAGE_SIZE) {
                         physical_page_addr = virt2phys(thechild->mm, vpage);
                     }
@@ -39,17 +39,6 @@ int proc_count(void) {
     }
 
     return 0;
-            /*
-            struct vm_area_struct *vma = 0;
-            unsigned long vpage;
-            if (thechild->mm && thechild->mm->mmap) {
-                for (vma = vma->mm->mmap; vma; vma->vm_next) {
-                    for (vpage = vma->vm_start; vpage < vma->vm_end; vpage += PAGE_SIZE) {
-                        unsigned long physical_page_addr = virt2phys(thechild->mm, vpage);
-                    }
-                }
-            }
-            */
 }
 
 unsigned long virt2phys(struct mm_struct *mm, unsigned long vpage) {
