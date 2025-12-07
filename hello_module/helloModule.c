@@ -36,7 +36,7 @@ int proc_count(void) {
                 }
             }
         }
-        printk(KERN_INFO "%d,%s,%d\n", thechild->pid, thechild->comm,physical_page_addr);
+        printk(KERN_INFO "%d,%s,%ld\n", thechild->pid, thechild->comm,physical_page_addr);
     }
 
     return 0;
