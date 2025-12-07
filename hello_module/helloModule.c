@@ -25,6 +25,7 @@ int proc_count(void) {
         if (thechild->pid > MIN_PID) {
             printk(KERN_INFO "%d, %s\n", thechild->pid, thechild->comm);
             i++;
+            /*
             struct vm_area_struct *vma = 0;
             unsigned long vpage;
             if (thechild->mm && thechild->mm->mmap) {
@@ -34,12 +35,14 @@ int proc_count(void) {
                     }
                 }
             }
+            */
         }
     }
     return i;
 }
 
 unsigned long virt2phys(struct mm_struct *mm, unsigned long vpage) {
+    /*
     pgd_t *pgd;
     p4d_t *p4d;
     pud_t *pud;
@@ -67,6 +70,7 @@ unsigned long virt2phys(struct mm_struct *mm, unsigned long vpage) {
     if (physical_page_addr == 70368644173568)
         return 0;
     return physical_page_addr;
+    */
 }
 
 MODULE_LICENSE("GPL");
