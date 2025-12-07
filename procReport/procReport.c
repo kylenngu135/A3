@@ -4,21 +4,26 @@
 #include<asm/io.h>
 #include <linux/pgtable.h>
 
+// constant to represent the minimum pid
 const int MIN_PID = 650;
 
+// function header
 int proc_count(void);
 
 int proc_init (void) {
-  // print out process report
+    // print out process report
     printk(KERN_INFO "PROCESS REPORT:\n");
+    // print out labels
     printk(KERN_INFO "proc_id,proc_name,contig_pages,noncontigu_pages,total_pages\n");
+    // call proc_count
     proc_count();
 
     return 0;
 }
 
 void proc_cleanup(void) {
-    printk(KERN_INFO "helloModule: performing cleanup of module\n");
+    // clean up message
+    printk(KERN_INFO "procReport: performing cleanup of module\n");
 }
 
 int proc_count(void) {
@@ -72,12 +77,14 @@ int proc_count(void) {
         }
     }
 
-    // print out totals
+    // print out totals info
     printk(KERN_INFO "TOTALS,,%lu,%lu,%lu\n", total_contig, total_noncontig, total_pages_all);
 
     return 0;
 }
 
 MODULE_LICENSE("GPL");
+// module initialization
 module_init(proc_init);
+// module cleanup
 module_exit(proc_cleanup);
