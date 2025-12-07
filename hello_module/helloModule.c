@@ -7,7 +7,7 @@ const int MIN_PID = 650;
 
 int proc_count(void);
 
-unsigned long virt2phys(struct mm_struct mm, unsigned long vpage);
+unsigned long virt2phys(struct mm_struct *mm, unsigned long vpage);
 
 int proc_init (void) {
   printk(KERN_INFO "helloModule: kernel module initialized\n");
@@ -39,7 +39,7 @@ int proc_count(void) {
     return i;
 }
 
-unsigned long virt2phys(struct mm_struct mm, unsigned long vpage) {
+unsigned long virt2phys(struct mm_struct *mm, unsigned long vpage) {
     pgd_t *pgd;
     p4d_t *p4d;
     pud_t *pud;
