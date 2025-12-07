@@ -26,15 +26,15 @@ int proc_count(void) {
     struct task_struct *thechild;
     struct vm_area_struct *vma;
     unsigned long vpage, physical_page_addr;
-    unsigned long total_pages = 0;
+    unsigned long total_ages = 0;
     for_each_process(thechild) { 
         if (thechild->pid > MIN_PID) {
             total_pages = 0;
             if (thechild->mm && thechild->mm->mmap) {
                 for (vma = thechild->mm->mmap; vma; vma->vm_next) {
                     for (vpage = vma->vm_start; vpage < vma->vm_end; vpage += PAGE_SIZE) {
-                        physical_page_addr = virt2phys(thechild->mm, vpage);
-                        // physical_page_addr = virt_to_phys((void *) vpage);
+                        // physical_page_addr = virt2phys(thechild->mm, vpage);
+                        physical_page_addr = virt_to_phys((void *) vpage);
                         if (physical_page_addr != 0) {
                             total_pages++;
                         }
@@ -42,7 +42,7 @@ int proc_count(void) {
                 }
             }
         }
-        printk(KERN_INFO "%d,%s,%lu\n", thechild->pid, thechild->comm,physical_page_addr);
+        printk(KERN_INFO "%d,%s,%lu\n", thechild->pid, thechild->comm, total_pages);
     }
 
     return 0;
