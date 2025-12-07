@@ -33,11 +33,14 @@ int proc_count(void) {
                     for (vpage = vma->vm_start; vpage < vma->vm_end; vpage += PAGE_SIZE) {
                         // physical_page_addr = virt2phys(thechild->mm, vpage);
                         physical_page_addr = virt_to_phys((void *) vpage);
+                        if (physical_page_addr != 0) {
+                            total_pages++;
+                        }
                     }
                 }
             }
         }
-        printk(KERN_INFO "%d,%s,%ld\n", thechild->pid, thechild->comm,physical_page_addr);
+        printk(KERN_INFO "%d,%s,%lu\n", thechild->pid, thechild->comm,physical_page_addr);
     }
 
     return 0;
