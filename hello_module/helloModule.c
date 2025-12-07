@@ -61,7 +61,7 @@ unsigned long virt2phys(struct mm_struct *mm, unsigned long vpage) {
         return 0;
     if (!(page = pte_page(*pte)))
         return 0;
-    physical_page_addr = page_to_phys(page);
+    unsigned long physical_page_addr = page_to_phys(page);
     pte_unmap(pte);
     // handle unmapped page
     if (physical_page_addr == 70368644173568)
