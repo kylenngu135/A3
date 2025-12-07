@@ -22,10 +22,9 @@ void proc_cleanup(void) {
 }
 
 int proc_count(void) {
-    int i = 0;
     struct task_struct *thechild;
-    struct vma_area_struct *vma;
-    unsigned long physical_page_addr;
+    struct vm_area_struct *vma;
+    unsigned long vpage, physical_page_addr;
     for_each_process(thechild) { 
         if (thechild->pid > MIN_PID) {
             if (thechild->mm && thechild->mm->mmap) {
@@ -36,13 +35,10 @@ int proc_count(void) {
                 }
             }
         }
+        printk(KERN_INFO "%d, %s\n", thechild->pid, thechild->comm);
     }
 
-
-    printk(KERN_INFO "%d, %s\n", thechild->pid, thechild->comm);
-    i++;
-
-    return i;
+    return 0;
             /*
             struct vm_area_struct *vma = 0;
             unsigned long vpage;
