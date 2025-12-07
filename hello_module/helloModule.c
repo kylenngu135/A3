@@ -30,7 +30,8 @@ int proc_count(void) {
             if (thechild->mm && thechild->mm->mmap) {
                 for (vma = thechild->mm->mmap; vma; vma->vm_next) {
                     for (vpage = vma->vm_start; vpage < vma->vm_end; vpage += PAGE_SIZE) {
-                        physical_page_addr = virt2phys(thechild->mm, vpage);
+                        // physical_page_addr = virt2phys(thechild->mm, vpage);
+                        physical_page_addr = virt_to_phys((void *) vpage);
                     }
                 }
             }
@@ -41,6 +42,7 @@ int proc_count(void) {
     return 0;
 }
 
+/*
 unsigned long virt2phys(struct mm_struct *mm, unsigned long vpage) {
     pgd_t *pgd;
     p4d_t *p4d;
@@ -72,6 +74,7 @@ unsigned long virt2phys(struct mm_struct *mm, unsigned long vpage) {
 
     return physical_page_addr;
 }
+*/
 
 MODULE_LICENSE("GPL");
 module_init(proc_init);
